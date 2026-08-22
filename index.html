@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>zyro.nerd</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #050505;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* HOME */
+
+#home {
+    min-height: 100vh;
+
+    background:
+        radial-gradient(
+            circle at center top,
+            rgba(100, 0, 0, 0.25),
+            transparent 40%
+        ),
+        #050505;
+}
+
+.topbar {
+    height: 70px;
+    border-bottom: 1px solid #250606;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 35px;
+
+    background: #070707;
+}
+
+.logo {
+    font-size: 30px;
+    font-weight: 900;
+    letter-spacing: -3px;
+}
+
+.logo span {
+    color: #8b0000;
+}
+
+.domain {
+    color: #555;
+    font-size: 14px;
+}
+
+.home-content {
+    width: 90%;
+    max-width: 1000px;
+
+    margin: auto;
+    padding-top: 90px;
+
+    text-align: center;
+}
+
+.big-logo {
+    font-size: 105px;
+    font-weight: 1000;
+    letter-spacing: -13px;
+
+    background: linear-gradient(
+        180deg,
+        white,
+        #650000
+    );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    filter:
+        drop-shadow(
+            0 0 25px rgba(130,0,0,.35)
+        );
+}
+
+h1 {
+    margin-top: 20px;
+    font-size: 34px;
+}
+
+.subtitle {
+    color: #666;
+    margin-top: 8px;
+    margin-bottom: 40px;
+}
+
+/* SEARCH */
+
+.search {
+    max-width: 760px;
+    margin: auto;
+
+    display: flex;
+
+    background: #0b0b0b;
+
+    border: 1px solid #410707;
+    border-radius: 15px;
+
+    padding: 6px;
+}
+
+.search:focus-within {
+    border-color: #8b0000;
+
+    box-shadow:
+        0 0 30px rgba(120,0,0,.2);
+}
+
+.search input {
+    flex: 1;
+
+    background: transparent;
+    border: none;
+    outline: none;
+
+    color: white;
+
+    padding: 17px;
+
+    font-size: 16px;
+}
+
+.search input::placeholder {
+    color: #555;
+}
+
+.go {
+    border: none;
+
+    background: #650000;
+    color: white;
+
+    padding: 0 28px;
+
+    border-radius: 10px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.go:hover {
+    background: #950000;
+}
+
+/* QUICK ACCESS */
+
+.title {
+    text-align: left;
+
+    margin-top: 65px;
+    margin-bottom: 18px;
+
+    color: #666;
+
+    font-size: 13px;
+    letter-spacing: 2px;
+
+    text-transform: uppercase;
+}
+
+.sites {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 14px;
+}
+
+.site {
+    background: #0b0b0b;
+
+    border: 1px solid #210606;
+    border-radius: 13px;
+
+    padding: 25px 15px;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.site:hover {
+    background: #110505;
+
+    border-color: #800000;
+
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 10px 30px rgba(100,0,0,.2);
+}
+
+.icon {
+    font-size: 27px;
+    margin-bottom: 10px;
+}
+
+.site-name {
+    font-weight: bold;
+}
+
+.site-url {
+    color: #555;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+/* MOBILE */
+
+@media(max-width:700px) {
+
+    .sites {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .home-content {
+        padding-top: 60px;
+    }
+
+    .big-logo {
+        font-size: 75px;
+    }
+
+    .search {
+        flex-direction: column;
+    }
+
+    .go {
+        height: 48px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div id="home">
+
+    <div class="topbar">
+
+        <div class="logo">
+            <span>Z</span>N
+        </div>
+
+        <div class="domain">
+            zyro.nerd
+        </div>
+
+    </div>
+
+
+    <div class="home-content">
+
+        <div class="big-logo">
+            ZN
+        </div>
+
+        <h1>
+            zyro.nerd
+        </h1>
+
+        <p class="subtitle">
+            Your gateway to the web.
+        </p>
+
+
+        <!-- SEARCH -->
+
+        <div class="search">
+
+            <input
+                id="homeSearch"
+                type="text"
+                placeholder="Search the web or enter a URL..."
+            >
+
+            <button
+                class="go"
+                onclick="searchWeb()"
+            >
+                GO
+            </button>
+
+        </div>
+
+
+        <!-- QUICK ACCESS -->
+
+        <div class="title">
+            Quick Access
+        </div>
+
+
+        <div class="sites">
+
+            <div
+                class="site"
+                onclick="openWebsite('https://www.youtube.com')"
+            >
+                <div class="icon">▶</div>
+
+                <div class="site-name">
+                    YouTube
+                </div>
+
+                <div class="site-url">
+                    youtube.com
+                </div>
+            </div>
+
+
+            <div
+                class="site"
+                onclick="openWebsite('https://itch.io')"
+            >
+                <div class="icon">◈</div>
+
+                <div class="site-name">
+                    itch.io
+                </div>
+
+                <div class="site-url">
+                    itch.io
+                </div>
+            </div>
+
+
+            <div
+                class="site"
+                onclick="openWebsite('https://github.com')"
+            >
+                <div class="icon">◉</div>
+
+                <div class="site-name">
+                    GitHub
+                </div>
+
+                <div class="site-url">
+                    github.com
+                </div>
+            </div>
+
+
+            <div
+                class="site"
+                onclick="openWebsite('https://open.spotify.com')"
+            >
+                <div class="icon">♫</div>
+
+                <div class="site-name">
+                    Spotify
+                </div>
+
+                <div class="site-url">
+                    spotify.com
+                </div>
+            </div>
+
+
+            <div
+                class="site"
+                onclick="openWebsite('https://www.canva.com')"
+            >
+                <div class="icon">✦</div>
+
+                <div class="site-name">
+                    Canva
+                </div>
+
+                <div class="site-url">
+                    canva.com
+                </div>
+            </div>
+
+
+            <div
+                class="site"
+                onclick="openWebsite('https://www.roblox.com')"
+            >
+                <div class="icon">◇</div>
+
+                <div class="site-name">
+                    Roblox
+                </div>
+
+                <div class="site-url">
+                    roblox.com
+                </div>
+            </div>
+
+
+            <div
+                class="site"
+                onclick="openWebsite('https://www.reddit.com')"
+            >
+                <div class="icon">●</div>
+
+                <div class="site-name">
+                    Reddit
+                </div>
+
+                <div class="site-url">
+                    reddit.com
+                </div>
+            </div>
+
+
+            <div
+                class="site"
+                onclick="openWebsite('https://www.google.com')"
+            >
+                <div class="icon">⌕</div>
+
+                <div class="site-name">
+                    Google
+                </div>
+
+                <div class="site-url">
+                    google.com
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* OPEN WEBSITE */
+
+function openWebsite(url) {
+    window.open(url, "_blank");
+}
+
+
+/* SEARCH */
+
+function searchWeb() {
+
+    const value =
+        document
+            .getElementById("homeSearch")
+            .value
+            .trim();
+
+    if (!value) return;
+
+
+    /* Full URL */
+
+    if (
+        value.startsWith("http://") ||
+        value.startsWith("https://")
+    ) {
+
+        openWebsite(value);
+
+        return;
+    }
+
+
+    /* Domain */
+
+    if (
+        value.includes(".") &&
+        !value.includes(" ")
+    ) {
+
+        openWebsite(
+            "https://" + value
+        );
+
+        return;
+    }
+
+
+    /* Google search */
+
+    openWebsite(
+        "https://www.google.com/search?q=" +
+        encodeURIComponent(value)
+    );
+}
+
+
+/* ENTER KEY */
+
+document
+    .getElementById("homeSearch")
+    .addEventListener(
+        "keydown",
+        function(event) {
+
+            if (event.key === "Enter") {
+                searchWeb();
+            }
+
+        }
+    );
+
+</script>
+
+</body>
+</html>
