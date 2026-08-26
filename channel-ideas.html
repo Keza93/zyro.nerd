@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Channel Ideas | ZN</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: #080808;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+.page {
+    width: 92%;
+    max-width: 950px;
+    margin: 45px auto;
+}
+
+.logo {
+    font-size: 30px;
+    font-weight: 800;
+}
+
+.logo span {
+    color: #a51d1d;
+}
+
+.subtitle {
+    color: #777;
+    margin: 8px 0 30px;
+}
+
+.card {
+    background: #100909;
+    border: 1px solid #351111;
+    border-radius: 16px;
+    padding: 25px;
+    margin-bottom: 20px;
+}
+
+h1 {
+    margin: 0 0 8px;
+}
+
+h2 {
+    margin-top: 0;
+}
+
+.description {
+    color: #888;
+    line-height: 1.5;
+}
+
+label {
+    display: block;
+    margin: 18px 0 7px;
+    color: #ccc;
+    font-size: 14px;
+}
+
+select {
+    width: 100%;
+    padding: 13px;
+
+    background: #080808;
+    color: white;
+
+    border: 1px solid #351111;
+    border-radius: 9px;
+
+    outline: none;
+}
+
+select:focus {
+    border-color: #8f1c1c;
+}
+
+.checks {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.check {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    padding: 12px;
+
+    background: #080808;
+    border: 1px solid #351111;
+    border-radius: 9px;
+
+    cursor: pointer;
+}
+
+.check input {
+    width: auto;
+}
+
+.generate {
+    width: 100%;
+    margin-top: 22px;
+    padding: 14px;
+
+    background: #8f1c1c;
+    color: white;
+
+    border: none;
+    border-radius: 10px;
+
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.generate:hover {
+    background: #b52323;
+}
+
+#results {
+    display: none;
+}
+
+.category {
+    margin-top: 22px;
+}
+
+.category-title {
+    color: #a51d1d;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.channel-list {
+    background: #080808;
+    border: 1px solid #351111;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.channel {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 12px 15px;
+
+    border-bottom: 1px solid #1d0d0d;
+    cursor: pointer;
+}
+
+.channel:last-child {
+    border-bottom: none;
+}
+
+.channel:hover {
+    background: #120909;
+}
+
+.channel-name {
+    color: #ddd;
+    font-family: monospace;
+}
+
+.channel-type {
+    color: #555;
+    font-size: 12px;
+}
+
+.copy-all {
+    margin-top: 20px;
+    padding: 12px 18px;
+
+    background: #8f1c1c;
+    color: white;
+
+    border: none;
+    border-radius: 9px;
+
+    cursor: pointer;
+}
+
+.copy-all:hover {
+    background: #b52323;
+}
+
+.note {
+    color: #666;
+    font-size: 12px;
+    text-align: center;
+    line-height: 1.5;
+    margin: 25px 0;
+}
+
+.back {
+    color: #777;
+    text-decoration: none;
+}
+
+.back:hover {
+    color: white;
+}
+
+@media (max-width: 650px) {
+    .checks {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+    <div class="logo">
+        Z<span>N</span>
+    </div>
+
+    <div class="subtitle">
+        Discord Server Helper
+    </div>
+
+
+    <div class="card">
+
+        <h1>💬 Channel Ideas</h1>
+
+        <p class="description">
+            Generate an organized channel structure for your
+            Discord server.
+        </p>
+
+
+        <label>Server Type</label>
+
+        <select id="serverType">
+
+            <option value="community">
+                Community
+            </option>
+
+            <option value="gaming">
+                Gaming
+            </option>
+
+            <option value="editing">
+                Editing
+            </option>
+
+            <option value="music">
+                Music
+            </option>
+
+            <option value="fan">
+                Fan Server
+            </option>
+
+            <option value="friends">
+                Friends
+            </option>
+
+        </select>
+
+
+        <label>Server Size</label>
+
+        <select id="serverSize">
+
+            <option value="small">
+                Small
+            </option>
+
+            <option value="medium">
+                Medium
+            </option>
+
+            <option value="large">
+                Large
+            </option>
+
+        </select>
+
+
+        <label>Include Extra Channels</label>
+
+        <div class="checks">
+
+            <label class="check">
+                <input type="checkbox" id="voice" checked>
+                Voice Channels
+            </label>
+
+            <label class="check">
+                <input type="checkbox" id="staff">
+                Staff Channels
+            </label>
+
+            <label class="check">
+                <input type="checkbox" id="bots">
+                Bot Channels
+            </label>
+
+            <label class="check">
+                <input type="checkbox" id="events">
+                Event Channels
+            </label>
+
+        </div>
+
+
+        <button
+            class="generate"
+            onclick="generateChannels()">
+
+            Generate Channels
+
+        </button>
+
+    </div>
+
+
+    <div class="card" id="results">
+
+        <h2>Your Channel Structure</h2>
+
+        <p class="description">
+            Click a channel to copy its name.
+        </p>
+
+        <div id="channelResults"></div>
+
+        <button
+            class="copy-all"
+            onclick="copyAll()">
+
+            Copy All
+
+        </button>
+
+    </div>
+
+
+    <p class="note">
+        These are channel suggestions. Adjust permissions
+        and visibility to fit your server.
+    </p>
+
+
+    <a class="back" href="index.html">
+        ← Back to ZN
+    </a>
+
+</div>
+
+
+<script>
+
+function generateChannels() {
+
+    const type =
+        document.getElementById("serverType").value;
+
+    const size =
+        document.getElementById("serverSize").value;
+
+    const includeVoice =
+        document.getElementById("voice").checked;
+
+    const includeStaff =
+        document.getElementById("staff").checked;
+
+    const includeBots =
+        document.getElementById("bots").checked;
+
+    const includeEvents =
+        document.getElementById("events").checked;
+
+
+    let categories = [];
+
+
+    /* INFORMATION */
+
+    categories.push({
+        name: "📌 INFORMATION",
+        channels: [
+            ["welcome", "text"],
+            ["rules", "text"],
+            ["announcements", "text"],
+            ["server-info", "text"]
+        ]
+    });
+
+
+    /* COMMUNITY */
+
+    categories.push({
+        name: "💬 COMMUNITY",
+        channels: [
+            ["general", "text"],
+            ["introductions", "text"],
+            ["media", "text"],
+            ["memes", "text"]
+        ]
+    });
+
+
+    /* TYPE-SPECIFIC */
+
+    if (type === "gaming") {
+
+        categories.push({
+            name: "🎮 GAMING",
+            channels: [
+                ["gaming-chat", "text"],
+                ["looking-for-group", "text"],
+                ["clips-and-highlights", "text"]
+            ]
+        });
+
+    }
+
+
+    if (type === "editing") {
+
+        categories.push({
+            name: "🎬 EDITING",
+            channels: [
+                ["editing-chat", "text"],
+                ["showcase", "text"],
+                ["feedback", "text"],
+                ["resources", "text"]
+            ]
+        });
+
+    }
+
+
+    if (type === "music") {
+
+        categories.push({
+            name: "🎵 MUSIC",
+            channels: [
+                ["music-chat", "text"],
+                ["song-recommendations", "text"],
+                ["playlists", "text"]
+            ]
+        });
+
+    }
+
+
+    if (type === "fan") {
+
+        categories.push({
+            name: "⭐ FAN COMMUNITY",
+            channels: [
+                ["fan-chat", "text"],
+                ["fan-content", "text"],
+                ["theories", "text"],
+                ["favorite-moments", "text"]
+            ]
+        });
+
+    }
+
+
+    if (type === "friends") {
+
+        categories.push({
+            name: "👥 FRIENDS",
+            channels: [
+                ["chat", "text"],
+                ["photos", "text"],
+                ["games", "text"]
+            ]
+        });
+
+    }
+
+
+    /* SMALL / MEDIUM / LARGE */
+
+    if (size !== "small") {
+
+        categories.push({
+            name: "🗣️ DISCUSSION",
+            channels: [
+                ["questions", "text"],
+                ["suggestions", "text"],
+                ["off-topic", "text"]
+            ]
+        });
+
+    }
+
+
+    /* VOICE */
+
+    if (includeVoice) {
+
+        categories.push({
+            name: "🔊 VOICE",
+            channels: [
+                ["General", "voice"],
+                ["Gaming", "voice"],
+                ["Chill", "voice"]
+            ]
+        });
+
+    }
+
+
+    /* BOTS */
+
+    if (includeBots) {
+
+        categories.push({
+            name: "🤖 BOTS",
+            channels: [
+                ["bot-commands", "text"],
+                ["bot-logs", "text"]
+            ]
+        });
+
+    }
+
+
+    /* EVENTS */
+
+    if (includeEvents) {
+
+        categories.push({
+            name: "🎉 EVENTS",
+            channels: [
+                ["events", "text"],
+                ["event-chat", "text"],
+                ["event-results", "text"]
+            ]
+        });
+
+    }
+
+
+    /* STAFF */
+
+    if (includeStaff) {
+
+        categories.push({
+            name: "🛡️ STAFF",
+            channels: [
+                ["staff-chat", "text"],
+                ["mod-logs", "text"],
+                ["reports", "text"],
+                ["staff-announcements", "text"]
+            ]
+        });
+
+    }
+
+
+    const output =
+        document.getElementById("channelResults");
+
+    output.innerHTML = "";
+
+
+    categories.forEach(category => {
+
+        const categoryElement =
+            document.createElement("div");
+
+        categoryElement.className =
+            "category";
+
+
+        const title =
+            document.createElement("div");
+
+        title.className =
+            "category-title";
+
+        title.textContent =
+            category.name;
+
+
+        const list =
+            document.createElement("div");
+
+        list.className =
+            "channel-list";
+
+
+        category.channels.forEach(channel => {
+
+            const element =
+                document.createElement("div");
+
+            element.className =
+                "channel";
+
+
+            element.innerHTML = `
+                <span class="channel-name">
+                    ${channel[0]}
+                </span>
+
+                <span class="channel-type">
+                    ${channel[1]}
+                </span>
+            `;
+
+
+            element.onclick = function() {
+
+                navigator.clipboard.writeText(
+                    channel[0]
+                );
+
+
+                const old =
+                    element.querySelector(".channel-type")
+                    .textContent;
+
+
+                element.querySelector(".channel-type")
+                    .textContent = "Copied!";
+
+
+                setTimeout(() => {
+
+                    element.querySelector(".channel-type")
+                        .textContent = old;
+
+                }, 900);
+
+            };
+
+
+            list.appendChild(element);
+
+        });
+
+
+        categoryElement.appendChild(title);
+        categoryElement.appendChild(list);
+
+        output.appendChild(categoryElement);
+
+    });
+
+
+    document.getElementById("results")
+        .style.display = "block";
+
+}
+
+
+function copyAll() {
+
+    const channels =
+        [...document.querySelectorAll(".channel-name")]
+        .map(channel => channel.textContent)
+        .join("\n");
+
+
+    navigator.clipboard.writeText(channels);
+
+
+    const button =
+        document.querySelector(".copy-all");
+
+
+    button.textContent =
+        "Copied!";
+
+
+    setTimeout(() => {
+
+        button.textContent =
+            "Copy All";
+
+    }, 1000);
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rules Generator | ZN</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: #080808;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+.page {
+    width: 92%;
+    max-width: 900px;
+    margin: 50px auto;
+}
+
+.logo {
+    font-size: 30px;
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+.logo span {
+    color: #a51d1d;
+}
+
+.subtitle {
+    color: #777;
+    margin-bottom: 30px;
+}
+
+.card {
+    background: #100909;
+    border: 1px solid #351111;
+    border-radius: 16px;
+    padding: 25px;
+    margin-bottom: 20px;
+}
+
+h1 {
+    margin: 0 0 8px;
+}
+
+h2 {
+    font-size: 18px;
+    margin-top: 0;
+}
+
+label {
+    display: block;
+    margin: 18px 0 7px;
+    color: #ccc;
+    font-size: 14px;
+}
+
+select,
+input {
+    width: 100%;
+    padding: 13px;
+    background: #080808;
+    color: white;
+    border: 1px solid #351111;
+    border-radius: 9px;
+    outline: none;
+}
+
+select:focus,
+input:focus {
+    border-color: #8f1c1c;
+}
+
+.options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 12px;
+    background: #0b0808;
+    border: 1px solid #291010;
+    border-radius: 9px;
+    cursor: pointer;
+}
+
+.option:hover {
+    border-color: #6d1717;
+}
+
+.option input {
+    width: auto;
+}
+
+.generate {
+    width: 100%;
+    margin-top: 25px;
+    padding: 14px;
+    background: #8f1c1c;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.generate:hover {
+    background: #b52323;
+}
+
+#result {
+    display: none;
+}
+
+.rules {
+    white-space: pre-wrap;
+    line-height: 1.7;
+    color: #ddd;
+    background: #080808;
+    border: 1px solid #291010;
+    border-radius: 10px;
+    padding: 20px;
+    min-height: 200px;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.copy,
+.back {
+    padding: 12px 18px;
+    border-radius: 9px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.copy {
+    border: none;
+    background: #8f1c1c;
+    color: white;
+}
+
+.back {
+    border: 1px solid #351111;
+    color: #aaa;
+    background: #100909;
+}
+
+.copy:hover {
+    background: #b52323;
+}
+
+.back:hover {
+    color: white;
+}
+
+@media (max-width: 600px) {
+    .options {
+        grid-template-columns: 1fr;
+    }
+
+    .buttons {
+        flex-direction: column;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+    <div class="logo">
+        Z<span>N</span>
+    </div>
+
+    <p class="subtitle">
+        Discord Server Helper
+    </p>
+
+
+    <div class="card">
+
+        <h1>📋 Rules Generator</h1>
+
+        <p class="subtitle">
+            Create a custom set of rules for your Discord server.
+        </p>
+
+
+        <label>Server Type</label>
+
+        <select id="serverType">
+
+            <option value="community">
+                Community
+            </option>
+
+            <option value="gaming">
+                Gaming
+            </option>
+
+            <option value="friend">
+                Friends / Private
+            </option>
+
+            <option value="creator">
+                Creator / Fan
+            </option>
+
+            <option value="editing">
+                Editing
+            </option>
+
+        </select>
+
+
+        <label>Rule Style</label>
+
+        <select id="style">
+
+            <option value="friendly">
+                Friendly
+            </option>
+
+            <option value="professional">
+                Professional
+            </option>
+
+            <option value="strict">
+                Strict
+            </option>
+
+        </select>
+
+
+        <label>Additional Rules</label>
+
+        <div class="options">
+
+            <label class="option">
+                <input type="checkbox" id="noSpam" checked>
+                No spam
+            </label>
+
+            <label class="option">
+                <input type="checkbox" id="noHarassment" checked>
+                No harassment
+            </label>
+
+            <label class="option">
+                <input type="checkbox" id="noAdvertising">
+                No advertising
+            </label>
+
+            <label class="option">
+                <input type="checkbox" id="noNSFW" checked>
+                No NSFW content
+            </label>
+
+            <label class="option">
+                <input type="checkbox" id="respect" checked>
+                Respect members
+            </label>
+
+            <label class="option">
+                <input type="checkbox" id="followDiscord" checked>
+                Follow Discord's rules
+            </label>
+
+        </div>
+
+
+        <button class="generate" onclick="generateRules()">
+            Generate Rules
+        </button>
+
+    </div>
+
+
+    <div class="card" id="result">
+
+        <h2>Your Discord Rules</h2>
+
+        <div class="rules" id="rules"></div>
+
+        <div class="buttons">
+
+            <button class="copy" onclick="copyRules()">
+                Copy Rules
+            </button>
+
+            <a class="back" href="index.html">
+                ← Back to ZN
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+function generateRules() {
+
+    const serverType =
+        document.getElementById("serverType").value;
+
+    const style =
+        document.getElementById("style").value;
+
+    let rules = [];
+
+
+    /* INTRO */
+
+    let intro = "";
+
+    if (style === "friendly") {
+
+        intro =
+            "Welcome to the server! Please take a moment to read and follow these rules.";
+
+    } else if (style === "professional") {
+
+        intro =
+            "Please review and follow the rules below to help maintain a respectful and organized server.";
+
+    } else {
+
+        intro =
+            "All members are expected to follow the rules below. Failure to do so may result in moderation action.";
+
+    }
+
+
+    rules.push("📋 SERVER RULES");
+    rules.push("");
+    rules.push(intro);
+    rules.push("");
+
+
+    /* SERVER TYPE */
+
+    if (serverType === "gaming") {
+
+        rules.push(
+            "1. Keep gaming discussions and activities respectful."
+        );
+
+    } else if (serverType === "editing") {
+
+        rules.push(
+            "1. Keep edits, feedback, and creative discussions respectful."
+        );
+
+    } else if (serverType === "creator") {
+
+        rules.push(
+            "1. Keep discussions about the creator and their community respectful."
+        );
+
+    } else if (serverType === "friend") {
+
+        rules.push(
+            "1. Respect everyone in this private community."
+        );
+
+    } else {
+
+        rules.push(
+            "1. Treat all members with respect."
+        );
+
+    }
+
+
+    /* OPTIONAL RULES */
+
+    let number = 2;
+
+
+    if (document.getElementById("noSpam").checked) {
+
+        rules.push(
+            number + ". Do not spam messages, mentions, or commands."
+        );
+
+        number++;
+
+    }
+
+
+    if (document.getElementById("noHarassment").checked) {
+
+        rules.push(
+            number + ". Harassment, bullying, or targeted abuse is not allowed."
+        );
+
+        number++;
+
+    }
+
+
+    if (document.getElementById("noAdvertising").checked) {
+
+        rules.push(
+            number + ". Advertising or self-promotion is not allowed without permission."
+        );
+
+        number++;
+
+    }
+
+
+    if (document.getElementById("noNSFW").checked) {
+
+        rules.push(
+            number + ". Do not post NSFW or inappropriate content."
+        );
+
+        number++;
+
+    }
+
+
+    if (document.getElementById("respect").checked) {
+
+        rules.push(
+            number + ". Respect other members, moderators, and staff."
+        );
+
+        number++;
+
+    }
+
+
+    if (document.getElementById("followDiscord").checked) {
+
+        rules.push(
+            number + ". Follow Discord's Terms of Service and Community Guidelines."
+        );
+
+        number++;
+
+    }
+
+
+    /* FINAL RULE */
+
+    rules.push(
+        number + ". Follow moderator instructions and use the appropriate channels."
+    );
+
+
+    document.getElementById("rules").textContent =
+        rules.join("\n");
+
+    document.getElementById("result").style.display =
+        "block";
+
+}
+
+
+function copyRules() {
+
+    const text =
+        document.getElementById("rules").textContent;
+
+    navigator.clipboard.writeText(text);
+
+    const button =
+        document.querySelector(".copy");
+
+    button.textContent = "Copied!";
+
+    setTimeout(function() {
+
+        button.textContent = "Copy Rules";
+
+    }, 1200);
+
+}
+
+</script>
+
+</body>
+</html>

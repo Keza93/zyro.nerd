@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Settings | ZN</title>
+
+<style>
+
+:root {
+    --accent: #a51d1d;
+    --accent-hover: #c32626;
+    --background: #080808;
+    --card: #100909;
+    --border: #351111;
+    --text: #ffffff;
+    --muted: #777777;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    background: var(--background);
+    color: var(--text);
+
+    font-family: Arial, sans-serif;
+
+    transition: background .2s, color .2s;
+}
+
+.page {
+    width: 92%;
+    max-width: 850px;
+    margin: 45px auto;
+}
+
+.logo {
+    font-size: 30px;
+    font-weight: 800;
+}
+
+.logo span {
+    color: var(--accent);
+}
+
+.subtitle {
+    color: var(--muted);
+    margin-top: 8px;
+    margin-bottom: 30px;
+}
+
+.card {
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    border-radius: 16px;
+
+    padding: 25px;
+
+    margin-bottom: 18px;
+}
+
+h1 {
+    margin: 0 0 8px;
+}
+
+h2 {
+    margin-top: 0;
+    font-size: 18px;
+}
+
+.description {
+    color: var(--muted);
+    line-height: 1.5;
+}
+
+.setting {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 16px 0;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.setting:last-child {
+    border-bottom: none;
+}
+
+.setting-info {
+    padding-right: 20px;
+}
+
+.setting-name {
+    font-weight: bold;
+}
+
+.setting-description {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+select {
+    padding: 10px 12px;
+
+    background: #080808;
+    color: white;
+
+    border: 1px solid var(--border);
+    border-radius: 8px;
+
+    outline: none;
+}
+
+input[type="color"] {
+    width: 48px;
+    height: 35px;
+
+    border: none;
+    padding: 0;
+
+    background: transparent;
+    cursor: pointer;
+}
+
+.switch {
+    position: relative;
+
+    width: 46px;
+    height: 25px;
+}
+
+.switch input {
+    display: none;
+}
+
+.slider {
+    position: absolute;
+
+    inset: 0;
+
+    background: #292929;
+
+    border-radius: 20px;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.slider:before {
+    content: "";
+
+    position: absolute;
+
+    width: 19px;
+    height: 19px;
+
+    left: 3px;
+    top: 3px;
+
+    background: white;
+
+    border-radius: 50%;
+
+    transition: .2s;
+}
+
+.switch input:checked + .slider {
+    background: var(--accent);
+}
+
+.switch input:checked + .slider:before {
+    transform: translateX(21px);
+}
+
+.reset {
+    width: 100%;
+
+    padding: 13px;
+
+    background: #171010;
+
+    color: #aaa;
+
+    border: 1px solid var(--border);
+
+    border-radius: 9px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+}
+
+.reset:hover {
+    color: white;
+    border-color: var(--accent);
+}
+
+.saved {
+    text-align: center;
+
+    color: #777;
+
+    font-size: 12px;
+
+    opacity: 0;
+
+    transition: opacity .2s;
+}
+
+.back {
+    display: inline-block;
+
+    color: #777;
+
+    text-decoration: none;
+
+    margin-top: 5px;
+}
+
+.back:hover {
+    color: white;
+}
+
+.light {
+    --background: #f4f4f4;
+    --card: #ffffff;
+    --border: #dddddd;
+    --text: #111111;
+    --muted: #666666;
+}
+
+.light select {
+    background: #ffffff;
+    color: #111111;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+    <div class="logo">
+        Z<span>N</span>
+    </div>
+
+    <div class="subtitle">
+        Settings
+    </div>
+
+
+    <!-- APPEARANCE -->
+
+    <div class="card">
+
+        <h1>⚙ Settings</h1>
+
+        <p class="description">
+            Customize how ZN looks and behaves.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>🎨 Appearance</h2>
+
+
+        <div class="setting">
+
+            <div class="setting-info">
+
+                <div class="setting-name">
+                    Accent Color
+                </div>
+
+                <div class="setting-description">
+                    Change ZN's main accent color.
+                </div>
+
+            </div>
+
+            <input
+                type="color"
+                id="accentColor"
+                value="#a51d1d"
+            >
+
+        </div>
+
+
+        <div class="setting">
+
+            <div class="setting-info">
+
+                <div class="setting-name">
+                    Theme
+                </div>
+
+                <div class="setting-description">
+                    Choose how ZN looks.
+                </div>
+
+            </div>
+
+            <select id="theme">
+
+                <option value="dark">
+                    Dark
+                </option>
+
+                <option value="light">
+                    Light
+                </option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+
+    <!-- INTERFACE -->
+
+    <div class="card">
+
+        <h2>🖥️ Interface</h2>
+
+
+        <div class="setting">
+
+            <div class="setting-info">
+
+                <div class="setting-name">
+                    Compact Mode
+                </div>
+
+                <div class="setting-description">
+                    Make ZN's interface more compact.
+                </div>
+
+            </div>
+
+
+            <label class="switch">
+
+                <input
+                    type="checkbox"
+                    id="compactMode"
+                >
+
+                <span class="slider"></span>
+
+            </label>
+
+        </div>
+
+
+        <div class="setting">
+
+            <div class="setting-info">
+
+                <div class="setting-name">
+                    Notifications
+                </div>
+
+                <div class="setting-description">
+                    Allow ZN to show site notifications.
+                </div>
+
+            </div>
+
+
+            <label class="switch">
+
+                <input
+                    type="checkbox"
+                    id="notifications"
+                    checked
+                >
+
+                <span class="slider"></span>
+
+            </label>
+
+        </div>
+
+    </div>
+
+
+    <!-- DATA -->
+
+    <div class="card">
+
+        <h2>💾 Data</h2>
+
+        <p class="description">
+            Your ZN settings are stored locally in your browser.
+            They are not sent to a server.
+        </p>
+
+        <button
+            class="reset"
+            onclick="resetSettings()">
+
+            Reset Settings
+
+        </button>
+
+    </div>
+
+
+    <div
+        class="saved"
+        id="saved">
+
+        ✓ Settings saved
+
+    </div>
+
+
+    <a
+        class="back"
+        href="index.html">
+
+        ← Back to ZN
+
+    </a>
+
+</div>
+
+
+<script>
+
+/* ELEMENTS */
+
+const accent =
+    document.getElementById("accentColor");
+
+const theme =
+    document.getElementById("theme");
+
+const compact =
+    document.getElementById("compactMode");
+
+const notifications =
+    document.getElementById("notifications");
+
+const saved =
+    document.getElementById("saved");
+
+
+/* LOAD SETTINGS */
+
+function loadSettings() {
+
+    const settings =
+        JSON.parse(
+            localStorage.getItem("znSettings")
+        ) || {};
+
+
+    if (settings.accent) {
+
+        accent.value =
+            settings.accent;
+
+    }
+
+
+    if (settings.theme) {
+
+        theme.value =
+            settings.theme;
+
+    }
+
+
+    if (settings.compact !== undefined) {
+
+        compact.checked =
+            settings.compact;
+
+    }
+
+
+    if (settings.notifications !== undefined) {
+
+        notifications.checked =
+            settings.notifications;
+
+    }
+
+
+    applySettings();
+
+}
+
+
+/* SAVE SETTINGS */
+
+function saveSettings() {
+
+    const settings = {
+
+        accent:
+            accent.value,
+
+        theme:
+            theme.value,
+
+        compact:
+            compact.checked,
+
+        notifications:
+            notifications.checked
+
+    };
+
+
+    localStorage.setItem(
+        "znSettings",
+        JSON.stringify(settings)
+    );
+
+
+    showSaved();
+
+    applySettings();
+
+}
+
+
+/* APPLY SETTINGS */
+
+function applySettings() {
+
+    document.documentElement
+        .style
+        .setProperty(
+            "--accent",
+            accent.value
+        );
+
+
+    document.documentElement
+        .style
+        .setProperty(
+            "--accent-hover",
+            accent.value
+        );
+
+
+    if (theme.value === "light") {
+
+        document.body.classList.add("light");
+
+    }
+
+    else {
+
+        document.body.classList.remove("light");
+
+    }
+
+
+    if (compact.checked) {
+
+        document.querySelectorAll(".card")
+            .forEach(card => {
+
+                card.style.padding = "16px";
+
+            });
+
+    }
+
+    else {
+
+        document.querySelectorAll(".card")
+            .forEach(card => {
+
+                card.style.padding = "25px";
+
+            });
+
+    }
+
+}
+
+
+/* SAVED MESSAGE */
+
+function showSaved() {
+
+    saved.style.opacity = "1";
+
+
+    setTimeout(() => {
+
+        saved.style.opacity = "0";
+
+    }, 1200);
+
+}
+
+
+/* RESET */
+
+function resetSettings() {
+
+    localStorage.removeItem(
+        "znSettings"
+    );
+
+
+    accent.value =
+        "#a51d1d";
+
+    theme.value =
+        "dark";
+
+    compact.checked =
+        false;
+
+    notifications.checked =
+        true;
+
+
+    applySettings();
+
+    showSaved();
+
+}
+
+
+/* EVENTS */
+
+accent.addEventListener(
+    "input",
+    saveSettings
+);
+
+theme.addEventListener(
+    "change",
+    saveSettings
+);
+
+compact.addEventListener(
+    "change",
+    saveSettings
+);
+
+notifications.addEventListener(
+    "change",
+    saveSettings
+);
+
+
+/* START */
+
+loadSettings();
+
+</script>
+
+</body>
+</html>

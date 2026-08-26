@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Username Generator | ZN</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: #080808;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+.page {
+    width: 92%;
+    max-width: 900px;
+    margin: 45px auto;
+}
+
+.logo {
+    font-size: 30px;
+    font-weight: 800;
+}
+
+.logo span {
+    color: #a51d1d;
+}
+
+.subtitle {
+    color: #777;
+    margin: 8px 0 30px;
+}
+
+.card {
+    background: #100909;
+    border: 1px solid #351111;
+    border-radius: 16px;
+    padding: 25px;
+    margin-bottom: 20px;
+}
+
+h1 {
+    margin: 0 0 8px;
+}
+
+.description {
+    color: #888;
+    line-height: 1.5;
+}
+
+label {
+    display: block;
+    margin: 18px 0 7px;
+    color: #ccc;
+    font-size: 14px;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 13px;
+
+    background: #080808;
+    color: white;
+
+    border: 1px solid #351111;
+    border-radius: 9px;
+
+    outline: none;
+}
+
+input:focus,
+select:focus {
+    border-color: #8f1c1c;
+}
+
+.generate {
+    width: 100%;
+    margin-top: 22px;
+    padding: 14px;
+
+    background: #8f1c1c;
+    color: white;
+
+    border: none;
+    border-radius: 10px;
+
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.generate:hover {
+    background: #b52323;
+}
+
+#results {
+    display: none;
+}
+
+.username-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.username {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 13px 15px;
+
+    background: #080808;
+    border: 1px solid #351111;
+    border-radius: 9px;
+
+    cursor: pointer;
+}
+
+.username:hover {
+    background: #120909;
+    border-color: #8f1c1c;
+}
+
+.username-text {
+    font-family: monospace;
+    word-break: break-all;
+}
+
+.copy {
+    margin-left: 10px;
+    padding: 7px 10px;
+
+    background: #8f1c1c;
+    color: white;
+
+    border: none;
+    border-radius: 7px;
+
+    cursor: pointer;
+}
+
+.copy:hover {
+    background: #b52323;
+}
+
+.copy-all {
+    margin-top: 20px;
+    padding: 12px 18px;
+
+    background: #8f1c1c;
+    color: white;
+
+    border: none;
+    border-radius: 9px;
+
+    cursor: pointer;
+}
+
+.copy-all:hover {
+    background: #b52323;
+}
+
+.note {
+    color: #666;
+    font-size: 12px;
+    text-align: center;
+    line-height: 1.5;
+    margin: 25px 0;
+}
+
+.back {
+    color: #777;
+    text-decoration: none;
+}
+
+.back:hover {
+    color: white;
+}
+
+@media (max-width: 650px) {
+    .username-list {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+    <div class="logo">
+        Z<span>N</span>
+    </div>
+
+    <div class="subtitle">
+        Discord Server Helper
+    </div>
+
+
+    <div class="card">
+
+        <h1>@ Username Generator</h1>
+
+        <p class="description">
+            Generate username ideas for Discord, editing
+            accounts, gaming profiles, and more.
+        </p>
+
+
+        <label>Keyword</label>
+
+        <input
+            id="keyword"
+            type="text"
+            placeholder="Example: zyro"
+        >
+
+
+        <label>Style</label>
+
+        <select id="style">
+
+            <option value="clean">
+                Clean
+            </option>
+
+            <option value="aesthetic">
+                Aesthetic
+            </option>
+
+            <option value="short">
+                Short
+            </option>
+
+            <option value="editor">
+                Editor
+            </option>
+
+            <option value="gaming">
+                Gaming
+            </option>
+
+            <option value="random">
+                Random
+            </option>
+
+        </select>
+
+
+        <label>Number of Results</label>
+
+        <select id="amount">
+
+            <option value="10">
+                10
+            </option>
+
+            <option value="20">
+                20
+            </option>
+
+            <option value="30">
+                30
+            </option>
+
+        </select>
+
+
+        <button
+            class="generate"
+            onclick="generateUsernames()">
+
+            Generate Usernames
+
+        </button>
+
+    </div>
+
+
+    <div class="card" id="results">
+
+        <h2>Your Usernames</h2>
+
+        <p class="description">
+            Click Copy next to a username to copy it.
+        </p>
+
+        <div
+            class="username-list"
+            id="usernameList">
+        </div>
+
+        <button
+            class="copy-all"
+            onclick="copyAll()">
+
+            Copy All
+
+        </button>
+
+    </div>
+
+
+    <p class="note">
+        These are username ideas. ZN does not check whether
+        a username is available on Discord or another platform.
+    </p>
+
+
+    <a class="back" href="index.html">
+        ← Back to ZN
+    </a>
+
+</div>
+
+
+<script>
+
+function generateUsernames() {
+
+    let keyword =
+        document.getElementById("keyword")
+        .value
+        .trim()
+        .toLowerCase();
+
+
+    const style =
+        document.getElementById("style")
+        .value;
+
+
+    const amount =
+        Number(
+            document.getElementById("amount")
+            .value
+        );
+
+
+    if (!keyword) {
+
+        alert("Enter a keyword first!");
+
+        return;
+
+    }
+
+
+    /*
+        Keep usernames simple and safe.
+    */
+
+    keyword =
+        keyword
+        .replace(/[^a-z0-9]/g, "");
+
+
+    if (!keyword) {
+
+        alert("Use letters or numbers in your keyword.");
+
+        return;
+
+    }
+
+
+    const cleanWords = [
+
+        keyword,
+        keyword + "fx",
+        keyword + "edits",
+        keyword + "hq",
+        keyword + "tv",
+        keyword + "core",
+        keyword + "zone",
+        keyword + "media",
+        keyword + "verse",
+        keyword + "online"
+
+    ];
+
+
+    const aestheticWords = [
+
+        keyword + "luv",
+        keyword + "angel",
+        keyword + "dream",
+        keyword + "cloud",
+        keyword + "star",
+        keyword + "moon",
+        keyword + "archive",
+        keyword + "files",
+        keyword + "diary",
+        keyword + "world"
+
+    ];
+
+
+    const shortWords = [
+
+        keyword.substring(0, 3),
+        keyword.substring(0, 4),
+        keyword.substring(0, 5),
+        keyword + "x",
+        keyword + "v",
+        keyword + "z",
+        "its" + keyword,
+        "im" + keyword,
+        keyword + "io",
+        keyword + "co"
+
+    ];
+
+
+    const editorWords = [
+
+        keyword + ".fx",
+        keyword + ".edit",
+        keyword + "fx",
+        keyword + "edits",
+        keyword + "fxx",
+        "edit" + keyword,
+        keyword + "clips",
+        keyword + "cc",
+        keyword + "am",
+        keyword + "motion"
+
+    ];
+
+
+    const gamingWords = [
+
+        keyword + "plays",
+        keyword + "gaming",
+        keyword + "gg",
+        keyword + "fps",
+        keyword + "xp",
+        keyword + "vr",
+        keyword + "game",
+        "x" + keyword,
+        keyword + "main",
+        keyword + "player"
+
+    ];
+
+
+    const randomWords = [
+
+        keyword + "404",
+        keyword + "777",
+        keyword + "999",
+        keyword + "2000",
+        keyword + "01",
+        keyword + "xx",
+        keyword + "xyz",
+        keyword + "online",
+        "not" + keyword,
+        "real" + keyword
+
+    ];
+
+
+    let options;
+
+
+    if (style === "clean") {
+
+        options = cleanWords;
+
+    }
+
+    else if (style === "aesthetic") {
+
+        options = aestheticWords;
+
+    }
+
+    else if (style === "short") {
+
+        options = shortWords;
+
+    }
+
+    else if (style === "editor") {
+
+        options = editorWords;
+
+    }
+
+    else if (style === "gaming") {
+
+        options = gamingWords;
+
+    }
+
+    else {
+
+        options = randomWords;
+
+    }
+
+
+    /*
+        Shuffle results.
+    */
+
+    options =
+        shuffle([...options]);
+
+
+    /*
+        Add randomly generated combinations
+        if more results are requested.
+    */
+
+    while (
+        options.length < amount
+    ) {
+
+        const extras = [
+
+            keyword +
+            randomNumber(10, 99),
+
+            keyword +
+            randomNumber(100, 999),
+
+            "its" +
+            keyword,
+
+            "the" +
+            keyword,
+
+            keyword +
+            "x",
+
+            keyword +
+            "v"
+
+        ];
+
+
+        options.push(
+            extras[
+                Math.floor(
+                    Math.random() *
+                    extras.length
+                )
+            ]
+        );
+
+    }
+
+
+    options =
+        [...new Set(options)];
+
+
+    /*
+        Make sure we have enough.
+    */
+
+    while (
+        options.length < amount
+    ) {
+
+        options.push(
+            keyword +
+            randomNumber(1000, 9999)
+        );
+
+    }
+
+
+    options =
+        options.slice(0, amount);
+
+
+    const list =
+        document.getElementById("usernameList");
+
+    list.innerHTML = "";
+
+
+    options.forEach(username => {
+
+        const element =
+            document.createElement("div");
+
+        element.className =
+            "username";
+
+
+        element.innerHTML = `
+
+            <span class="username-text">
+                ${username}
+            </span>
+
+            <button class="copy">
+                Copy
+            </button>
+
+        `;
+
+
+        element.querySelector(".copy")
+            .onclick = function(event) {
+
+                event.stopPropagation();
+
+                navigator.clipboard.writeText(
+                    username
+                );
+
+
+                this.textContent =
+                    "Copied!";
+
+
+                setTimeout(() => {
+
+                    this.textContent =
+                        "Copy";
+
+                }, 900);
+
+            };
+
+
+        list.appendChild(element);
+
+    });
+
+
+    document.getElementById("results")
+        .style.display = "block";
+
+}
+
+
+function randomNumber(min, max) {
+
+    return Math.floor(
+        Math.random() *
+        (max - min + 1)
+    ) + min;
+
+}
+
+
+function shuffle(array) {
+
+    for (
+        let i = array.length - 1;
+        i > 0;
+        i--
+    ) {
+
+        const j =
+            Math.floor(
+                Math.random() * (i + 1)
+            );
+
+        [
+            array[i],
+            array[j]
+        ] = [
+            array[j],
+            array[i]
+        ];
+
+    }
+
+    return array;
+
+}
+
+
+function copyAll() {
+
+    const usernames =
+        [...document.querySelectorAll(".username-text")]
+        .map(
+            username =>
+                username.textContent.trim()
+        )
+        .join("\n");
+
+
+    navigator.clipboard.writeText(
+        usernames
+    );
+
+
+    const button =
+        document.querySelector(".copy-all");
+
+
+    button.textContent =
+        "Copied!";
+
+
+    setTimeout(() => {
+
+        button.textContent =
+            "Copy All";
+
+    }, 1000);
+
+}
+
+</script>
+
+</body>
+</html>

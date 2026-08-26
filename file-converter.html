@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>File Converter | ZN</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    background: #080808;
+    color: white;
+
+    font-family: Arial, sans-serif;
+}
+
+.page {
+    width: 92%;
+    max-width: 900px;
+
+    margin: 45px auto;
+}
+
+.logo {
+    font-size: 30px;
+    font-weight: 800;
+}
+
+.logo span {
+    color: #a51d1d;
+}
+
+.subtitle {
+    color: #777;
+    margin-top: 8px;
+    margin-bottom: 30px;
+}
+
+.card {
+    background: #100909;
+
+    border: 1px solid #351111;
+
+    border-radius: 16px;
+
+    padding: 25px;
+
+    margin-bottom: 20px;
+}
+
+h1 {
+    margin: 0 0 8px;
+}
+
+h2 {
+    margin-top: 0;
+}
+
+.description {
+    color: #888;
+    line-height: 1.5;
+}
+
+
+/* DROP ZONE */
+
+.drop-zone {
+
+    border: 2px dashed #351111;
+
+    border-radius: 14px;
+
+    padding: 45px 20px;
+
+    text-align: center;
+
+    margin-top: 20px;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.drop-zone:hover,
+.drop-zone.dragging {
+
+    border-color: #a51d1d;
+
+    background: #120909;
+}
+
+.drop-icon {
+
+    font-size: 45px;
+
+    margin-bottom: 10px;
+}
+
+.drop-text {
+
+    color: #aaa;
+
+    margin-bottom: 8px;
+}
+
+.browse {
+
+    color: #a51d1d;
+
+    font-weight: bold;
+}
+
+
+/* FILE INFO */
+
+.file-info {
+
+    display: none;
+
+    margin-top: 20px;
+
+    padding: 15px;
+
+    background: #080808;
+
+    border: 1px solid #351111;
+
+    border-radius: 10px;
+}
+
+.file-name {
+
+    font-weight: bold;
+
+    word-break: break-all;
+}
+
+.file-size {
+
+    color: #777;
+
+    font-size: 12px;
+
+    margin-top: 5px;
+}
+
+
+/* OPTIONS */
+
+.options {
+
+    display: none;
+
+    margin-top: 20px;
+}
+
+label {
+
+    display: block;
+
+    color: #ccc;
+
+    font-size: 13px;
+
+    margin-bottom: 7px;
+}
+
+select {
+
+    width: 100%;
+
+    padding: 13px;
+
+    background: #080808;
+
+    color: white;
+
+    border: 1px solid #351111;
+
+    border-radius: 9px;
+
+    outline: none;
+}
+
+select:focus {
+
+    border-color: #a51d1d;
+}
+
+
+/* BUTTON */
+
+.convert {
+
+    width: 100%;
+
+    margin-top: 18px;
+
+    padding: 14px;
+
+    background: #8f1c1c;
+
+    color: white;
+
+    border: none;
+
+    border-radius: 9px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+
+    font-size: 14px;
+}
+
+.convert:hover {
+
+    background: #b52323;
+}
+
+
+/* PREVIEW */
+
+.preview {
+
+    display: none;
+
+    margin-top: 20px;
+
+    text-align: center;
+}
+
+.preview img {
+
+    max-width: 100%;
+
+    max-height: 350px;
+
+    border-radius: 10px;
+
+    border: 1px solid #351111;
+}
+
+
+/* RESULT */
+
+.result {
+
+    display: none;
+
+    margin-top: 20px;
+
+    padding: 15px;
+
+    background: #080808;
+
+    border: 1px solid #351111;
+
+    border-radius: 10px;
+}
+
+.success {
+
+    color: #8fd19e;
+
+    font-weight: bold;
+}
+
+.download {
+
+    display: inline-block;
+
+    margin-top: 12px;
+
+    padding: 11px 16px;
+
+    background: #8f1c1c;
+
+    color: white;
+
+    text-decoration: none;
+
+    border-radius: 8px;
+
+    font-weight: bold;
+}
+
+.download:hover {
+
+    background: #b52323;
+}
+
+
+/* PRIVACY */
+
+.privacy {
+
+    color: #777;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+
+    text-align: center;
+
+    margin: 25px 0;
+}
+
+.back {
+
+    color: #777;
+
+    text-decoration: none;
+}
+
+.back:hover {
+
+    color: white;
+}
+
+
+/* HIDDEN INPUT */
+
+#fileInput {
+
+    display: none;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    .page {
+
+        width: 94%;
+
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<div class="page">
+
+
+    <div class="logo">
+        Z<span>N</span>
+    </div>
+
+
+    <div class="subtitle">
+        Useful Tools
+    </div>
+
+
+    <div class="card">
+
+
+        <h1>📁 File Converter</h1>
+
+
+        <p class="description">
+
+            Convert images between PNG, JPG, and WebP
+            directly in your browser.
+
+        </p>
+
+
+        <!-- DROP ZONE -->
+
+        <div
+            class="drop-zone"
+            id="dropZone"
+        >
+
+            <div class="drop-icon">
+                📁
+            </div>
+
+            <div class="drop-text">
+
+                Drag & drop your image here
+
+            </div>
+
+            <div class="browse">
+
+                or click to browse
+
+            </div>
+
+        </div>
+
+
+        <input
+            type="file"
+            id="fileInput"
+            accept="image/png,image/jpeg,image/webp"
+        >
+
+
+        <!-- FILE INFO -->
+
+        <div
+            class="file-info"
+            id="fileInfo"
+        >
+
+            <div
+                class="file-name"
+                id="fileName"
+            ></div>
+
+            <div
+                class="file-size"
+                id="fileSize"
+            ></div>
+
+        </div>
+
+
+        <!-- OPTIONS -->
+
+        <div
+            class="options"
+            id="options"
+        >
+
+            <label>
+                Convert to
+            </label>
+
+
+            <select id="format">
+
+                <option value="image/png">
+                    PNG
+                </option>
+
+                <option value="image/jpeg">
+                    JPG
+                </option>
+
+                <option value="image/webp">
+                    WebP
+                </option>
+
+            </select>
+
+
+            <button
+                class="convert"
+                onclick="convertImage()"
+            >
+
+                Convert File
+
+            </button>
+
+        </div>
+
+
+        <!-- PREVIEW -->
+
+        <div
+            class="preview"
+            id="preview"
+        >
+
+            <h3>
+                Preview
+            </h3>
+
+            <img
+                id="previewImage"
+                alt="Preview"
+            >
+
+        </div>
+
+
+        <!-- RESULT -->
+
+        <div
+            class="result"
+            id="result"
+        >
+
+            <div class="success">
+
+                ✓ Conversion complete!
+
+            </div>
+
+
+            <div
+                id="resultText"
+                style="color:#777;margin-top:6px;"
+            ></div>
+
+
+            <a
+                id="download"
+                class="download"
+                download
+            >
+
+                Download File
+
+            </a>
+
+        </div>
+
+
+    </div>
+
+
+    <p class="privacy">
+
+        🔒 Your image is processed locally in your browser.
+        ZN does not upload the file to a server.
+
+    </p>
+
+
+    <a
+        class="back"
+        href="index.html"
+    >
+
+        ← Back to ZN
+
+    </a>
+
+
+</div>
+
+
+<script>
+
+
+let selectedFile = null;
+
+
+/* ELEMENTS */
+
+const dropZone =
+    document.getElementById("dropZone");
+
+const fileInput =
+    document.getElementById("fileInput");
+
+const fileInfo =
+    document.getElementById("fileInfo");
+
+const fileName =
+    document.getElementById("fileName");
+
+const fileSize =
+    document.getElementById("fileSize");
+
+const options =
+    document.getElementById("options");
+
+const preview =
+    document.getElementById("preview");
+
+const previewImage =
+    document.getElementById("previewImage");
+
+const result =
+    document.getElementById("result");
+
+
+
+/* CLICK TO UPLOAD */
+
+dropZone.addEventListener(
+    "click",
+    () => {
+
+        fileInput.click();
+
+    }
+);
+
+
+
+/* FILE SELECTED */
+
+fileInput.addEventListener(
+    "change",
+    () => {
+
+        if (fileInput.files.length > 0) {
+
+            handleFile(
+                fileInput.files[0]
+            );
+
+        }
+
+    }
+);
+
+
+
+/* DRAG ENTER */
+
+dropZone.addEventListener(
+    "dragover",
+    event => {
+
+        event.preventDefault();
+
+        dropZone.classList.add(
+            "dragging"
+        );
+
+    }
+);
+
+
+
+/* DRAG LEAVE */
+
+dropZone.addEventListener(
+    "dragleave",
+    () => {
+
+        dropZone.classList.remove(
+            "dragging"
+        );
+
+    }
+);
+
+
+
+/* DROP */
+
+dropZone.addEventListener(
+    "drop",
+    event => {
+
+        event.preventDefault();
+
+        dropZone.classList.remove(
+            "dragging"
+        );
+
+
+        const file =
+            event.dataTransfer.files[0];
+
+
+        if (file) {
+
+            handleFile(file);
+
+        }
+
+    }
+);
+
+
+
+/* HANDLE FILE */
+
+function handleFile(file) {
+
+
+    if (
+        !file.type.startsWith("image/")
+    ) {
+
+        alert(
+            "Please select a PNG, JPG, or WebP image."
+        );
+
+        return;
+
+    }
+
+
+    selectedFile = file;
+
+
+    fileName.textContent =
+        file.name;
+
+
+    fileSize.textContent =
+        formatBytes(file.size);
+
+
+    fileInfo.style.display =
+        "block";
+
+
+    options.style.display =
+        "block";
+
+
+    result.style.display =
+        "none";
+
+
+    /* Preview */
+
+    const reader =
+        new FileReader();
+
+
+    reader.onload =
+        function(event) {
+
+            previewImage.src =
+                event.target.result;
+
+            preview.style.display =
+                "block";
+
+        };
+
+
+    reader.readAsDataURL(file);
+
+}
+
+
+
+/* CONVERT */
+
+function convertImage() {
+
+
+    if (!selectedFile) {
+
+        alert(
+            "Choose an image first."
+        );
+
+        return;
+
+    }
+
+
+    const format =
+        document.getElementById("format")
+        .value;
+
+
+    const image =
+        new Image();
+
+
+    const reader =
+        new FileReader();
+
+
+    reader.onload =
+        function(event) {
+
+
+            image.onload =
+                function() {
+
+
+                    const canvas =
+                        document.createElement(
+                            "canvas"
+                        );
+
+
+                    canvas.width =
+                        image.width;
+
+
+                    canvas.height =
+                        image.height;
+
+
+                    const context =
+                        canvas.getContext(
+                            "2d"
+                        );
+
+
+                    /*
+                        JPG doesn't support
+                        transparency, so use
+                        a white background.
+                    */
+
+                    if (
+                        format ===
+                        "image/jpeg"
+                    ) {
+
+                        context.fillStyle =
+                            "#ffffff";
+
+                        context.fillRect(
+                            0,
+                            0,
+                            canvas.width,
+                            canvas.height
+                        );
+
+                    }
+
+
+                    context.drawImage(
+                        image,
+                        0,
+                        0
+                    );
+
+
+                    const quality =
+                        format ===
+                        "image/png"
+                        ? undefined
+                        : 0.92;
+
+
+                    canvas.toBlob(
+
+                        blob => {
+
+                            if (!blob) {
+
+                                alert(
+                                    "Conversion failed."
+                                );
+
+                                return;
+
+                            }
+
+
+                            const url =
+                                URL.createObjectURL(
+                                    blob
+                                );
+
+
+                            const extension =
+                                getExtension(
+                                    format
+                                );
+
+
+                            const originalName =
+                                selectedFile.name
+                                .replace(
+                                    /\.[^/.]+$/,
+                                    ""
+                                );
+
+
+                            const newName =
+                                originalName +
+                                "." +
+                                extension;
+
+
+                            const download =
+                                document.getElementById(
+                                    "download"
+                                );
+
+
+                            download.href =
+                                url;
+
+
+                            download.download =
+                                newName;
+
+
+                            document.getElementById(
+                                "resultText"
+                            ).textContent =
+                                newName;
+
+
+                            result.style.display =
+                                "block";
+
+                        },
+
+                        format,
+
+                        quality
+
+                    );
+
+                };
+
+
+            image.src =
+                event.target.result;
+
+        };
+
+
+    reader.readAsDataURL(
+        selectedFile
+    );
+
+}
+
+
+
+/* EXTENSION */
+
+function getExtension(format) {
+
+
+    if (
+        format === "image/jpeg"
+    ) {
+
+        return "jpg";
+
+    }
+
+
+    if (
+        format === "image/webp"
+    ) {
+
+        return "webp";
+
+    }
+
+
+    return "png";
+
+}
+
+
+
+/* FILE SIZE */
+
+function formatBytes(bytes) {
+
+
+    if (bytes === 0) {
+
+        return "0 Bytes";
+
+    }
+
+
+    const sizes = [
+        "Bytes",
+        "KB",
+        "MB",
+        "GB"
+    ];
+
+
+    const index =
+        Math.floor(
+            Math.log(bytes) /
+            Math.log(1024)
+        );
+
+
+    return (
+        parseFloat(
+            (
+                bytes /
+                Math.pow(
+                    1024,
+                    index
+                )
+            ).toFixed(2)
+        )
+        +
+        " " +
+        sizes[index]
+    );
+
+}
+
+</script>
+
+
+</body>
+</html>

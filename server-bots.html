@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Discord Bots | ZN</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #080808;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+.page {
+    width: 92%;
+    max-width: 1000px;
+    margin: 45px auto;
+}
+
+/* HEADER */
+
+.logo {
+    font-size: 30px;
+    font-weight: 800;
+}
+
+.logo span {
+    color: #a51d1d;
+}
+
+.subtitle {
+    color: #777;
+    margin-top: 8px;
+}
+
+/* SEARCH */
+
+.search {
+    width: 100%;
+    margin: 30px 0 20px;
+    padding: 15px 18px;
+
+    background: #100909;
+    color: white;
+
+    border: 1px solid #351111;
+    border-radius: 11px;
+
+    outline: none;
+    font-size: 15px;
+}
+
+.search:focus {
+    border-color: #8f1c1c;
+}
+
+/* FILTERS */
+
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 25px;
+}
+
+.filter {
+    padding: 9px 14px;
+
+    background: #100909;
+    color: #aaa;
+
+    border: 1px solid #351111;
+    border-radius: 8px;
+
+    cursor: pointer;
+}
+
+.filter:hover,
+.filter.active {
+    background: #8f1c1c;
+    color: white;
+}
+
+/* BOT GRID */
+
+.bot-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+/* BOT CARD */
+
+.bot-card {
+    background: #100909;
+    border: 1px solid #351111;
+    border-radius: 14px;
+    padding: 20px;
+
+    transition: .2s;
+}
+
+.bot-card:hover {
+    border-color: #7d1b1b;
+    transform: translateY(-2px);
+}
+
+.bot-top {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.bot-icon {
+    width: 55px;
+    height: 55px;
+
+    background: #1a0b0b;
+    border: 1px solid #421414;
+    border-radius: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 25px;
+}
+
+.bot-name {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.bot-category {
+    color: #8f1c1c;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.bot-description {
+    color: #999;
+    line-height: 1.5;
+    font-size: 14px;
+    margin: 17px 0;
+}
+
+.bot-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.bot-button {
+    flex: 1;
+    padding: 10px;
+
+    border-radius: 8px;
+    text-align: center;
+
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.invite {
+    background: #8f1c1c;
+    color: white;
+}
+
+.invite:hover {
+    background: #b52323;
+}
+
+.website {
+    background: #171010;
+    border: 1px solid #351111;
+    color: #aaa;
+}
+
+.website:hover {
+    color: white;
+}
+
+/* NO RESULTS */
+
+.no-results {
+    display: none;
+    color: #777;
+    text-align: center;
+    padding: 50px;
+}
+
+/* BACK */
+
+.back {
+    display: inline-block;
+    margin-top: 30px;
+    color: #777;
+    text-decoration: none;
+}
+
+.back:hover {
+    color: white;
+}
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+    .bot-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+    <div class="logo">
+        Z<span>N</span>
+    </div>
+
+    <div class="subtitle">
+        Discord Server Bot Finder
+    </div>
+
+
+    <!-- SEARCH -->
+
+    <input
+        class="search"
+        id="search"
+        type="text"
+        placeholder="Search bots..."
+    >
+
+
+    <!-- FILTERS -->
+
+    <div class="filters">
+
+        <button class="filter active" data-category="all">
+            All
+        </button>
+
+        <button class="filter" data-category="moderation">
+            Moderation
+        </button>
+
+        <button class="filter" data-category="tickets">
+            Tickets
+        </button>
+
+        <button class="filter" data-category="leveling">
+            Leveling
+        </button>
+
+        <button class="filter" data-category="fun">
+            Fun
+        </button>
+
+        <button class="filter" data-category="security">
+            Security
+        </button>
+
+    </div>
+
+
+    <!-- BOTS -->
+
+    <div class="bot-grid" id="botGrid">
+
+
+        <!-- CARL-BOT -->
+
+        <div class="bot-card"
+             data-name="Carl-bot"
+             data-category="moderation">
+
+            <div class="bot-top">
+
+                <div class="bot-icon">
+                    C
+                </div>
+
+                <div>
+                    <div class="bot-name">
+                        Carl-bot
+                    </div>
+
+                    <div class="bot-category">
+                        Moderation
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="bot-description">
+                Moderation, reaction roles, logging, automod,
+                custom commands, and more.
+            </div>
+
+            <div class="bot-buttons">
+
+                <a
+                    class="bot-button invite"
+                    href="https://carl.gg/"
+                    target="_blank">
+                    Website
+                </a>
+
+                <a
+                    class="bot-button website"
+                    href="https://carl.gg/"
+                    target="_blank">
+                    Learn More
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- DYNO -->
+
+        <div class="bot-card"
+             data-name="Dyno"
+             data-category="moderation">
+
+            <div class="bot-top">
+
+                <div class="bot-icon">
+                    D
+                </div>
+
+                <div>
+                    <div class="bot-name">
+                        Dyno
+                    </div>
+
+                    <div class="bot-category">
+                        Moderation
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="bot-description">
+                Moderation, automod, custom commands,
+                reaction roles, and server management.
+            </div>
+
+            <div class="bot-buttons">
+
+                <a
+                    class="bot-button invite"
+                    href="https://dyno.gg/"
+                    target="_blank">
+                    Website
+                </a>
+
+                <a
+                    class="bot-button website"
+                    href="https://dyno.gg/"
+                    target="_blank">
+                    Learn More
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- ARCANE -->
+
+        <div class="bot-card"
+             data-name="Arcane"
+             data-category="leveling">
+
+            <div class="bot-top">
+
+                <div class="bot-icon">
+                    A
+                </div>
+
+                <div>
+                    <div class="bot-name">
+                        Arcane
+                    </div>
+
+                    <div class="bot-category">
+                        Leveling
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="bot-description">
+                Leveling, XP systems, role rewards,
+                moderation, and server engagement.
+            </div>
+
+            <div class="bot-buttons">
+
+                <a
+                    class="bot-button invite"
+                    href="https://arcane.bot/"
+                    target="_blank">
+                    Website
+                </a>
+
+                <a
+                    class="bot-button website"
+                    href="https://arcane.bot/"
+                    target="_blank">
+                    Learn More
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- TICKET TOOL -->
+
+        <div class="bot-card"
+             data-name="Ticket Tool"
+             data-category="tickets">
+
+            <div class="bot-top">
+
+                <div class="bot-icon">
+                    T
+                </div>
+
+                <div>
+                    <div class="bot-name">
+                        Ticket Tool
+                    </div>
+
+                    <div class="bot-category">
+                        Tickets
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="bot-description">
+                Create support tickets and organize
+                staff conversations inside your server.
+            </div>
+
+            <div class="bot-buttons">
+
+                <a
+                    class="bot-button invite"
+                    href="https://tickettool.xyz/"
+                    target="_blank">
+                    Website
+                </a>
+
+                <a
+                    class="bot-button website"
+                    href="https://tickettool.xyz/"
+                    target="_blank">
+                    Learn More
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- WICK -->
+
+        <div class="bot-card"
+             data-name="Wick"
+             data-category="security">
+
+            <div class="bot-top">
+
+                <div class="bot-icon">
+                    W
+                </div>
+
+                <div>
+                    <div class="bot-name">
+                        Wick
+                    </div>
+
+                    <div class="bot-category">
+                        Security
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="bot-description">
+                Security and anti-nuke protection
+                designed to help protect Discord servers.
+            </div>
+
+            <div class="bot-buttons">
+
+                <a
+                    class="bot-button invite"
+                    href="https://wick.bot/"
+                    target="_blank">
+                    Website
+                </a>
+
+                <a
+                    class="bot-button website"
+                    href="https://wick.bot/"
+                    target="_blank">
+                    Learn More
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- DANK MEMER -->
+
+        <div class="bot-card"
+             data-name="Dank Memer"
+             data-category="fun">
+
+            <div class="bot-top">
+
+                <div class="bot-icon">
+                    D
+                </div>
+
+                <div>
+                    <div class="bot-name">
+                        Dank Memer
+                    </div>
+
+                    <div class="bot-category">
+                        Fun
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="bot-description">
+                Games, currency, memes, and other
+                entertainment features for communities.
+            </div>
+
+            <div class="bot-buttons">
+
+                <a
+                    class="bot-button invite"
+                    href="https://dankmemer.lol/"
+                    target="_blank">
+                    Website
+                </a>
+
+                <a
+                    class="bot-button website"
+                    href="https://dankmemer.lol/"
+                    target="_blank">
+                    Learn More
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="no-results" id="noResults">
+        No bots found.
+    </div>
+
+
+    <a class="back" href="index.html">
+        ← Back to ZN
+    </a>
+
+</div>
+
+
+<script>
+
+const search = document.getElementById("search");
+const cards = document.querySelectorAll(".bot-card");
+const filters = document.querySelectorAll(".filter");
+const noResults = document.getElementById("noResults");
+
+let currentCategory = "all";
+
+
+function filterBots() {
+
+    const query =
+        search.value.toLowerCase();
+
+    let visible = 0;
+
+
+    cards.forEach(card => {
+
+        const name =
+            card.dataset.name.toLowerCase();
+
+        const category =
+            card.dataset.category;
+
+
+        const matchesSearch =
+            name.includes(query);
+
+        const matchesCategory =
+            currentCategory === "all" ||
+            category === currentCategory;
+
+
+        if (matchesSearch && matchesCategory) {
+
+            card.style.display = "block";
+            visible++;
+
+        } else {
+
+            card.style.display = "none";
+
+        }
+
+    });
+
+
+    noResults.style.display =
+        visible === 0 ? "block" : "none";
+
+}
+
+
+search.addEventListener("input", filterBots);
+
+
+filters.forEach(button => {
+
+    button.addEventListener("click", function() {
+
+        filters.forEach(b =>
+            b.classList.remove("active")
+        );
+
+        this.classList.add("active");
+
+        currentCategory =
+            this.dataset.category;
+
+        filterBots();
+
+    });
+
+});
+
+</script>
+
+</body>
+</html>

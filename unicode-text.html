@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Unicode Text | ZN</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: #080808;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+.page {
+    width: 92%;
+    max-width: 900px;
+    margin: 45px auto;
+}
+
+.logo {
+    font-size: 30px;
+    font-weight: 800;
+}
+
+.logo span {
+    color: #a51d1d;
+}
+
+.subtitle {
+    color: #777;
+    margin: 8px 0 30px;
+}
+
+.card {
+    background: #100909;
+    border: 1px solid #351111;
+    border-radius: 16px;
+    padding: 25px;
+    margin-bottom: 20px;
+}
+
+h1 {
+    margin: 0 0 8px;
+}
+
+.description {
+    color: #888;
+    line-height: 1.5;
+}
+
+textarea {
+    width: 100%;
+    min-height: 120px;
+    resize: vertical;
+
+    margin-top: 15px;
+    padding: 15px;
+
+    background: #080808;
+    color: white;
+
+    border: 1px solid #351111;
+    border-radius: 10px;
+
+    outline: none;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+}
+
+textarea:focus {
+    border-color: #8f1c1c;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+button {
+    padding: 12px 18px;
+
+    border-radius: 9px;
+    border: none;
+
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.generate {
+    background: #8f1c1c;
+    color: white;
+}
+
+.generate:hover {
+    background: #b52323;
+}
+
+.clear {
+    background: #171010;
+    border: 1px solid #351111;
+    color: #aaa;
+}
+
+.clear:hover {
+    color: white;
+}
+
+.results {
+    display: none;
+}
+
+.result {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 14px;
+    margin-top: 10px;
+
+    background: #080808;
+    border: 1px solid #351111;
+    border-radius: 10px;
+}
+
+.result-text {
+    flex: 1;
+    word-break: break-word;
+    font-size: 16px;
+}
+
+.copy {
+    padding: 8px 12px;
+    background: #8f1c1c;
+    color: white;
+}
+
+.copy:hover {
+    background: #b52323;
+}
+
+.note {
+    color: #666;
+    font-size: 12px;
+    text-align: center;
+    line-height: 1.5;
+    margin: 25px 0;
+}
+
+.back {
+    color: #777;
+    text-decoration: none;
+}
+
+.back:hover {
+    color: white;
+}
+
+@media (max-width: 600px) {
+    .buttons {
+        flex-direction: column;
+    }
+
+    .result {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+    <div class="logo">
+        Z<span>N</span>
+    </div>
+
+    <div class="subtitle">
+        Discord Server Helper
+    </div>
+
+
+    <div class="card">
+
+        <h1>Aa Unicode Text</h1>
+
+        <p class="description">
+            Transform text into Unicode styles that can be
+            used for Discord server names, channels, roles,
+            and messages.
+        </p>
+
+
+        <textarea
+            id="input"
+            placeholder="Type something here..."
+        ></textarea>
+
+
+        <div class="buttons">
+
+            <button
+                class="generate"
+                onclick="generateText()">
+
+                Generate
+
+            </button>
+
+            <button
+                class="clear"
+                onclick="clearText()">
+
+                Clear
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="card results" id="results">
+
+        <h2>Results</h2>
+
+        <div id="resultList"></div>
+
+    </div>
+
+
+    <p class="note">
+        Unicode characters may look different depending on
+        the device, font, and Discord client being used.
+    </p>
+
+
+    <a class="back" href="index.html">
+        ← Back to ZN
+    </a>
+
+</div>
+
+
+<script>
+
+function generateText() {
+
+    const input =
+        document.getElementById("input")
+        .value
+        .trim();
+
+
+    if (!input) {
+
+        alert("Type something first!");
+
+        return;
+
+    }
+
+
+    const styles = [
+
+        {
+            name: "Bold",
+            convert: text =>
+                convertMath(text, 0x1D400)
+        },
+
+        {
+            name: "Italic",
+            convert: text =>
+                convertMath(text, 0x1D434)
+        },
+
+        {
+            name: "Bold Italic",
+            convert: text =>
+                convertMath(text, 0x1D468)
+        },
+
+        {
+            name: "Monospace",
+            convert: text =>
+                convertMath(text, 0x1D670)
+        },
+
+        {
+            name: "Fullwidth",
+            convert: text =>
+                fullwidth(text)
+        },
+
+        {
+            name: "Small Caps",
+            convert: text =>
+                smallCaps(text)
+        }
+
+    ];
+
+
+    const list =
+        document.getElementById("resultList");
+
+    list.innerHTML = "";
+
+
+    styles.forEach(style => {
+
+        const result =
+            style.convert(input);
+
+
+        const element =
+            document.createElement("div");
+
+        element.className =
+            "result";
+
+
+        element.innerHTML = `
+            <div>
+                <strong>${style.name}</strong>
+                <div class="result-text">
+                    ${escapeHTML(result)}
+                </div>
+            </div>
+
+            <button class="copy">
+                Copy
+            </button>
+        `;
+
+
+        element.querySelector(".copy")
+            .onclick = function() {
+
+                navigator.clipboard.writeText(result);
+
+                this.textContent =
+                    "Copied!";
+
+                setTimeout(() => {
+
+                    this.textContent =
+                        "Copy";
+
+                }, 900);
+
+            };
+
+
+        list.appendChild(element);
+
+    });
+
+
+    document.getElementById("results")
+        .style.display = "block";
+
+}
+
+
+/* MATHEMATICAL UNICODE */
+
+function convertMath(text, start) {
+
+    let output = "";
+
+
+    for (const char of text) {
+
+        const code =
+            char.charCodeAt(0);
+
+
+        if (code >= 65 && code <= 90) {
+
+            output +=
+                String.fromCodePoint(
+                    start + (code - 65)
+                );
+
+        }
+
+        else if (code >= 97 && code <= 122) {
+
+            output +=
+                String.fromCodePoint(
+                    start + 26 + (code - 97)
+                );
+
+        }
+
+        else {
+
+            output += char;
+
+        }
+
+    }
+
+
+    return output;
+
+}
+
+
+/* FULLWIDTH */
+
+function fullwidth(text) {
+
+    return [...text].map(char => {
+
+        const code =
+            char.charCodeAt(0);
+
+
+        if (code >= 33 && code <= 126) {
+
+            return String.fromCharCode(
+                code + 0xFEE0
+            );
+
+        }
+
+
+        if (char === " ") {
+
+            return "　";
+
+        }
+
+
+        return char;
+
+    }).join("");
+
+}
+
+
+/* SMALL CAPS */
+
+function smallCaps(text) {
+
+    const map = {
+
+        a:"ᴀ", b:"ʙ", c:"ᴄ", d:"ᴅ",
+        e:"ᴇ", f:"ꜰ", g:"ɢ", h:"ʜ",
+        i:"ɪ", j:"ᴊ", k:"ᴋ", l:"ʟ",
+        m:"ᴍ", n:"ɴ", o:"ᴏ", p:"ᴘ",
+        q:"ǫ", r:"ʀ", s:"s", t:"ᴛ",
+        u:"ᴜ", v:"ᴠ", w:"ᴡ", x:"x",
+        y:"ʏ", z:"ᴢ"
+
+    };
+
+
+    return [...text].map(char => {
+
+        const lower =
+            char.toLowerCase();
+
+        return map[lower] || char;
+
+    }).join("");
+
+}
+
+
+/* SECURITY */
+
+function escapeHTML(text) {
+
+    return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+function clearText() {
+
+    document.getElementById("input")
+        .value = "";
+
+    document.getElementById("results")
+        .style.display = "none";
+
+    document.getElementById("resultList")
+        .innerHTML = "";
+
+}
+
+</script>
+
+</body>
+</html>

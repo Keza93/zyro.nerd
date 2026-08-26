@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Role Ideas | ZN</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: #080808;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+.page {
+    width: 92%;
+    max-width: 950px;
+    margin: 45px auto;
+}
+
+.logo {
+    font-size: 30px;
+    font-weight: 800;
+}
+
+.logo span {
+    color: #a51d1d;
+}
+
+.subtitle {
+    color: #777;
+    margin: 8px 0 30px;
+}
+
+.card {
+    background: #100909;
+    border: 1px solid #351111;
+    border-radius: 16px;
+    padding: 25px;
+    margin-bottom: 20px;
+}
+
+h1 {
+    margin: 0 0 8px;
+}
+
+h2 {
+    margin-top: 0;
+}
+
+.description {
+    color: #888;
+    line-height: 1.5;
+}
+
+label {
+    display: block;
+    margin: 18px 0 7px;
+    color: #ccc;
+    font-size: 14px;
+}
+
+select,
+input {
+    width: 100%;
+    padding: 13px;
+
+    background: #080808;
+    color: white;
+
+    border: 1px solid #351111;
+    border-radius: 9px;
+
+    outline: none;
+}
+
+select:focus,
+input:focus {
+    border-color: #8f1c1c;
+}
+
+.generate {
+    width: 100%;
+    margin-top: 22px;
+    padding: 14px;
+
+    background: #8f1c1c;
+    color: white;
+
+    border: none;
+    border-radius: 10px;
+
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.generate:hover {
+    background: #b52323;
+}
+
+#results {
+    display: none;
+}
+
+.role-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.role {
+    padding: 15px;
+
+    background: #080808;
+    border: 1px solid #351111;
+    border-radius: 10px;
+
+    cursor: pointer;
+    transition: .15s;
+}
+
+.role:hover {
+    border-color: #8f1c1c;
+    background: #120909;
+}
+
+.role-name {
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.role-description {
+    color: #777;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.copy-all {
+    margin-top: 20px;
+    padding: 12px 18px;
+
+    background: #8f1c1c;
+    color: white;
+
+    border: none;
+    border-radius: 9px;
+
+    cursor: pointer;
+}
+
+.copy-all:hover {
+    background: #b52323;
+}
+
+.back {
+    display: inline-block;
+    margin-top: 5px;
+    color: #777;
+    text-decoration: none;
+}
+
+.back:hover {
+    color: white;
+}
+
+.note {
+    color: #666;
+    font-size: 12px;
+    text-align: center;
+    line-height: 1.5;
+    margin-top: 25px;
+}
+
+@media (max-width: 650px) {
+    .role-list {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+    <div class="logo">
+        Z<span>N</span>
+    </div>
+
+    <div class="subtitle">
+        Discord Server Helper
+    </div>
+
+
+    <div class="card">
+
+        <h1>◆ Role Ideas</h1>
+
+        <p class="description">
+            Generate role ideas based on the type and style
+            of your Discord server.
+        </p>
+
+
+        <label>Server Type</label>
+
+        <select id="serverType">
+
+            <option value="community">
+                Community
+            </option>
+
+            <option value="gaming">
+                Gaming
+            </option>
+
+            <option value="editing">
+                Editing
+            </option>
+
+            <option value="music">
+                Music
+            </option>
+
+            <option value="friends">
+                Friends
+            </option>
+
+            <option value="fan">
+                Fan Server
+            </option>
+
+        </select>
+
+
+        <label>Role Style</label>
+
+        <select id="roleStyle">
+
+            <option value="standard">
+                Standard
+            </option>
+
+            <option value="aesthetic">
+                Aesthetic
+            </option>
+
+            <option value="simple">
+                Simple
+            </option>
+
+            <option value="fun">
+                Fun
+            </option>
+
+        </select>
+
+
+        <label>Server Size</label>
+
+        <select id="serverSize">
+
+            <option value="small">
+                Small
+            </option>
+
+            <option value="medium">
+                Medium
+            </option>
+
+            <option value="large">
+                Large
+            </option>
+
+        </select>
+
+
+        <button
+            class="generate"
+            onclick="generateRoles()">
+
+            Generate Roles
+
+        </button>
+
+    </div>
+
+
+    <div class="card" id="results">
+
+        <h2>Your Role Ideas</h2>
+
+        <p class="description">
+            Click a role to copy its name.
+        </p>
+
+        <div
+            class="role-list"
+            id="roleList">
+        </div>
+
+        <button
+            class="copy-all"
+            onclick="copyAll()">
+
+            Copy All
+
+        </button>
+
+    </div>
+
+
+    <p class="note">
+        These are role ideas for your Discord server.
+        Make sure to configure permissions carefully and
+        follow Discord's Terms of Service and Community Guidelines.
+    </p>
+
+
+    <a class="back" href="index.html">
+        ← Back to ZN
+    </a>
+
+</div>
+
+
+<script>
+
+function generateRoles() {
+
+    const type =
+        document.getElementById("serverType").value;
+
+    const style =
+        document.getElementById("roleStyle").value;
+
+    const size =
+        document.getElementById("serverSize").value;
+
+
+    let roles = [];
+
+
+    /* BASIC STAFF ROLES */
+
+    if (style === "standard") {
+
+        roles = [
+            ["Owner", "Server owner"],
+            ["Administrator", "Server administration"],
+            ["Moderator", "Server moderation"],
+            ["Helper", "Helps members"],
+            ["Member", "Regular server member"]
+        ];
+
+    }
+
+
+    else if (style === "aesthetic") {
+
+        roles = [
+            ["✦ Owner", "Server owner"],
+            ["✦ Admin", "Server administration"],
+            ["✦ Mod", "Server moderation"],
+            ["✦ Helper", "Community helper"],
+            ["✦ Member", "Regular member"]
+        ];
+
+    }
+
+
+    else if (style === "simple") {
+
+        roles = [
+            ["Owner", "Owner"],
+            ["Admin", "Admin"],
+            ["Mod", "Moderator"],
+            ["Staff", "Staff"],
+            ["Member", "Member"]
+        ];
+
+    }
+
+
+    else {
+
+        roles = [
+            ["👑 Owner", "Server owner"],
+            ["🛡️ Staff", "Server staff"],
+            ["🔨 Mod", "Moderator"],
+            ["⭐ VIP", "Special member"],
+            ["👤 Member", "Regular member"]
+        ];
+
+    }
+
+
+    /* SERVER TYPE ROLES */
+
+    if (type === "gaming") {
+
+        roles.push(
+            ["Gamer", "Gaming community member"],
+            ["Tournament", "Tournament participant"]
+        );
+
+    }
+
+
+    if (type === "editing") {
+
+        roles.push(
+            ["Editor", "Video or photo editor"],
+            ["Designer", "Creative designer"]
+        );
+
+    }
+
+
+    if (type === "music") {
+
+        roles.push(
+            ["Artist", "Music artist"],
+            ["Listener", "Music community member"]
+        );
+
+    }
+
+
+    if (type === "fan") {
+
+        roles.push(
+            ["Fan", "Community fan"],
+            ["OG Fan", "Long-time community member"]
+        );
+
+    }
+
+
+    if (type === "friends") {
+
+        roles.push(
+            ["Bestie", "Close friend"],
+            ["Friend", "Friend group member"]
+        );
+
+    }
+
+
+    /* SIZE */
+
+    if (size === "medium") {
+
+        roles.push(
+            ["Event Team", "Helps organize events"],
+            ["Community Team", "Helps manage the community"]
+        );
+
+    }
+
+
+    if (size === "large") {
+
+        roles.push(
+            ["Senior Moderator", "Experienced moderator"],
+            ["Trial Moderator", "New moderator"],
+            ["Event Manager", "Manages server events"],
+            ["Community Manager", "Manages community activities"]
+        );
+
+    }
+
+
+    const list =
+        document.getElementById("roleList");
+
+    list.innerHTML = "";
+
+
+    roles.forEach(role => {
+
+        const element =
+            document.createElement("div");
+
+        element.className = "role";
+
+        element.innerHTML =
+            `
+            <div class="role-name">
+                ${role[0]}
+            </div>
+
+            <div class="role-description">
+                ${role[1]}
+            </div>
+            `;
+
+
+        element.onclick = function() {
+
+            navigator.clipboard.writeText(role[0]);
+
+            const old =
+                element.querySelector(".role-description")
+                .textContent;
+
+            element.querySelector(".role-description")
+                .textContent = "Copied!";
+
+            setTimeout(() => {
+
+                element.querySelector(".role-description")
+                    .textContent = old;
+
+            }, 900);
+
+        };
+
+
+        list.appendChild(element);
+
+    });
+
+
+    document.getElementById("results")
+        .style.display = "block";
+
+}
+
+
+function copyAll() {
+
+    const roles =
+        [...document.querySelectorAll(".role-name")]
+        .map(role => role.textContent)
+        .join("\n");
+
+
+    navigator.clipboard.writeText(roles);
+
+
+    const button =
+        document.querySelector(".copy-all");
+
+    button.textContent =
+        "Copied!";
+
+
+    setTimeout(() => {
+
+        button.textContent =
+            "Copy All";
+
+    }, 1000);
+
+}
+
+</script>
+<script src="zn-settings.js"></script>
+</body>
+</html>
